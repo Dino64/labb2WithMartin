@@ -130,5 +130,6 @@ public class System extends AppCompatActivity {
             textViewUser.setText("Loged In");
             getData();
             }
-        };
+        });
+}
 }
