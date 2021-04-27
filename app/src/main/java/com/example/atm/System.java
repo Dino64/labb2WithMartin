@@ -8,10 +8,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.os.Message;
+
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +24,8 @@ public class System extends AppCompatActivity {
     Boolean retrievData;
 
 
-    public System(Context context) {
-        localDatabaseHelper = new LocalDatabaseHelper(context);
+    public System() {
+        localDatabaseHelper = new LocalDatabaseHelper(this);
     }
 
     //Used one time to insert Balance.

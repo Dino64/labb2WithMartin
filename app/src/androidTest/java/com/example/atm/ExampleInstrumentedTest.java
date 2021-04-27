@@ -26,11 +26,11 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.atm", appContext.getPackageName());
     }
-    @Test
-    public void getData(){
+   @Test
+    public void getData() {
 
-        System sys = new System(context);
-        assertTrue(sys.retrievData);
-    }
+       System sys = new System();
+       assertTrue(sys.retrievData);
+   }
 
 }
