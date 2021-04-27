@@ -21,12 +21,14 @@ public class System extends AppCompatActivity {
     private Button balanceBtn;
     private TextView textViewUser;
     private TextView balance;
+    Boolean retrievData;
 
 
     public System(Context context) {
         localDatabaseHelper = new LocalDatabaseHelper(context);
     }
 
+    //Used one time to insert Balance.
     public long insertData(String balance) {
         SQLiteDatabase dbb = localDatabaseHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -41,36 +43,19 @@ public class System extends AppCompatActivity {
         Cursor cursor = db.query(localDatabaseHelper.TABLE_NAME, columns, null, null, null, null, null);
         StringBuffer buffer = new StringBuffer();
         while (cursor.moveToNext()) {
-            int card_id = cursor.getInt(cursor.getColumnIndex(localDatabaseHelper.CARD_ID));
-            String start_date = cursor.getString(cursor.getColumnIndex(localDatabaseHelper.Balance));
+            int atm_id = cursor.getInt(cursor.getColumnIndex(localDatabaseHelper.CARD_ID));
+            String balance = cursor.getString(cursor.getColumnIndex(localDatabaseHelper.Balance));
 
-            buffer.append(card_id + "   " + start_date + " \n");
+            buffer.append(atm_id + "   " + balance + " \n");
         }
-        return buffer.toString();
-    }
-
-    public int delete(String uname) {
-        SQLiteDatabase db = localDatabaseHelper.getWritableDatabase();
-        String[] whereArgs = {uname};
-
-        int count = db.delete(localDatabaseHelper.TABLE_NAME, localDatabaseHelper.Balance + " = ?", whereArgs);
-        return count;
-    }
+        if (buffer.toString() != null) {
 
 
-    public void deleteAllRows() {
-        SQLiteDatabase db = localDatabaseHelper.getWritableDatabase();
-        db.execSQL("delete from " + localDatabaseHelper.TABLE_NAME);
-
-    }
-
-    public int updateData(String old_balance, String new_balance) {
-        SQLiteDatabase db = localDatabaseHelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(localDatabaseHelper.Balance, new_balance);
-        String[] whereArgs = {old_balance};
-        int count = db.update(localDatabaseHelper.TABLE_NAME, contentValues, localDatabaseHelper.Balance + " = ?", whereArgs);
-        return count;
+            retrievData = true;
+            return buffer.toString();
+        } else {
+            return null;
+        }
     }
 
 
@@ -118,18 +103,22 @@ public class System extends AppCompatActivity {
 
     public void create_toast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-    } @Override
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_system);
         textViewUser = findViewById(R.id.textViewUser);
         balance = findViewById(R.id.balance);
+        balanceBtn = findViewById(R.id.balanceBtn);
         balanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            textViewUser.setText("Loged In");
-            getData();
+                textViewUser.setText("Loged In");
+                balance.setText(getData());
+
             }
         });
-}
+    }
 }

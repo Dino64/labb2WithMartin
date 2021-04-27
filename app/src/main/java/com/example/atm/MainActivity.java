@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void login() {
+
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         if (email.isEmpty()) {
@@ -64,10 +65,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editTextPassword.setError("min password length should be 8 characters");
             editTextPassword.requestFocus();
             return;
-        } else {
-            Toast.makeText(getApplicationContext(), "Successfully", Toast.LENGTH_SHORT).show();
+        }
+        else {
             startActivity(new Intent(MainActivity.this, System.class));
-
+            Toast.makeText(getApplicationContext(), "Successfully", Toast.LENGTH_SHORT).show();
         }
 
 
